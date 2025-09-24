@@ -18,3 +18,57 @@ body {
     background: #88c5d8 no-repeat center center fixed;
     padding: 2rem;
 }
+
+.container{
+    margin: auto;
+    width: 25%;
+}
+
+.resumen{
+    display: flex;
+    flex-direction: row;
+}
+
+.totales{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 30px 10px 10px 30px;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 30px 10px 10px 30px;
+}
+
+#totalHoras{
+    font-weight: bold;
+    font-size: 1.2em;
+    
+}
+
+
+/* =======================
+      BOTONES
+========================== */
+.addButton{
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 150px;
+}
+
+.delete-btn{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}

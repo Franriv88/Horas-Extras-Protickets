@@ -8,15 +8,20 @@
     <title>Horas Extras</title>
 </head>
 <body>
-    <fieldset>
+    <div class="container">
+        <fieldset>
         <legend>Horas Extras</legend>
-        <div class="totales">
+        <div class="resumen">
+            <div class="mes">
             <input type="month" name="" id="">
+        </div>
+        <div class="totales">
             <p><span id="totalHoras">---</span></p>
             <input type="number" id="">
             <input type="number" id="">
         </div>
-        <button type="button" onclick="agregarFila()">Agregar fila</button>
+        </div>
+        <button class="addButton" type="button" onclick="agregarFila()">Agregar fila</button>
         <div class="datos">
             <table id="miTabla" class="talbe-wrapper">
             <thead>
@@ -38,7 +43,8 @@
             </tbody>
             </table>
         </div>
-    </fieldset>
+        </fieldset>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
