@@ -38,10 +38,44 @@ function calcularHoras(inputElemento) {
 
     // 7. Muestra el resultado en el span de la fila
     resultadoSpan.textContent = `${horas}h ${minutos}m`;
+
+    calcularTotalHoras();
 }
 
+//================================
+//      LÓGICA DE SUMA TOTAL DE HORAS
+//================================
+function calcularTotalHoras() {
+    // Selecciona el span donde se mostrará el total final
+    const totalHorasSpan = document.getElementById('totalHoras');
+    
+    // Selecciona TODOS los spans que muestran los resultados de cada fila
+    const todasLasSumasParciales = document.querySelectorAll('.sumaParcial');
+    
+    let totalMinutos = 0;
 
+    // Recorre cada uno de los spans de las filas
+    todasLasSumasParciales.forEach(span => {
+        const texto = span.textContent; // ej: "8h 30m"
+        
+        // Extrae las horas y los minutos del texto usando expresiones regulares
+        const horasMatch = texto.match(/(\d+)h/);
+        const minutosMatch = texto.match(/(\d+)m/);
+        
+        const horas = horasMatch ? parseInt(horasMatch[1], 10) : 0;
+        const minutos = minutosMatch ? parseInt(minutosMatch[1], 10) : 0;
+        
+        // Suma todo en una sola unidad (minutos) para que sea más fácil
+        totalMinutos += (horas * 60) + minutos;
+    });
 
+    // Convierte el total de minutos de vuelta al formato de horas y minutos
+    const totalHoras = Math.floor(totalMinutos / 60);
+    const minutosRestantes = totalMinutos % 60;
+
+    // Muestra el resultado final en el span de totales
+    totalHorasSpan.textContent = `Total del Mes: ${totalHoras}h ${minutosRestantes}m`;
+}
 
 //================================
 //      LÓGICA DE BOTONES
@@ -65,6 +99,8 @@ function agregarFila() {
 }
 
 function eliminarFila(boton) {
-    var fila = boton.parentNode.parentNode;
+    const fila = boton.closest('tr');
     fila.parentNode.removeChild(fila);
+
+    calcularTotalHoras(); // <--- AÑADE ESTA LÍNEA
 }
