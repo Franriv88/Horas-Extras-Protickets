@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/icon/color1.png">
+    <link rel="stylesheet" href="styles.css">
+    <title>Horas Extras</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Horas Extras</legend>
+        <div class="totales">
+            <input type="month" name="" id="">
+            <p id="">---</p>
+            <p id="">---</p>
+            <p id="">---</p>
+        </div>
+        <button type="button" onclick="agregarFila()">Agregar fila</button>
+        <div class="datos">
+            <table id="miTabla" class="talbe-wrapper">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora inicio</th>
+                    <th>Hora fin</th>
+                    <th>Cant Horas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="date" name="dato1[]"></td>
+                    <td><input type="time" name="dato2[]"></td>
+                    <td><input type="time" name="dato3[]"></td>
+                    <td><p><span id="sumaParcial" name="dato4[]">0</span></p></td>
+                    <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </fieldset>
+    <script src="script.js"></script>
+</body>
+</html>
