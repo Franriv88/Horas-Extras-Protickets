@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1bb566">
     <link rel="icon" href="/icon/color1.png">
     <link rel="stylesheet" href="styles.css">
     <title>Horas Extras</title>
@@ -17,8 +18,16 @@
         </div>
         <div class="totales">
             <p><span id="totalHoras">---</span></p>
-            <input type="number" class="inputPpales">
-            <input type="number" class="inputPpales">
+            <div class="galeno_viaticos">
+                <div class="input-con-simbolo">
+                    <p class="layers">Galeno</p>
+                    <input type="number" class="inputPpales">
+                </div>
+                <div class="input-con-simbolo">
+                    <p class="layers">Viáticos</p>
+                    <input type="number" class="inputPpales">
+                </div>
+            </div>
         </div>
         </div>
         <button class="addButton" type="button" onclick="agregarFila()">Agregar fila</button>

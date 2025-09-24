@@ -1,8 +1,8 @@
 :root{
-    --primary-color: #4CAF50;
+    --primary-color: #FE7F2D;
     --border-color: #ddd;
     --background-light: #f9f9f9;
-    --border-bottom: #4CAF50 1px solid;
+    --border-bottom: #233D4D 1px solid;
 }
 
 * {
@@ -15,19 +15,16 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 13px;
     line-height: 1.6;
-    
-    /* Propiedades del fondo */
     background-color: #586063; /* Color de respaldo si la imagen no carga */
-    background-image: url(https://i.pinimg.com/736x/67/28/67/6728670022309504b7cec7f926a08d05.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
+    background: url(https://i.pinimg.com/736x/67/28/67/6728670022309504b7cec7f926a08d05.jpg) no-repeat center center fixed;
     background-size: cover;
 }
 
 .container{
     margin: auto;
     width: 25%;
+    align-content: center; /*no está funcionando esto*/
+    margin: auto;
 }
 
 .resumen{
@@ -46,9 +43,20 @@ body {
 fieldset{
     display: flex;
     flex-direction: column;
+    background: transparent;
+    backdrop-filter: blur(7px);
+    border: #c9c9c921 1px solid;
+    border-radius: 10px;
+    box-shadow: 
+    0 1px 1px rgba(255, 255, 255, 0.12), 
+    0 2px 2px rgba(202, 195, 195, 0.12), 
+    0 4px 4px rgba(231, 3, 3, 0.12), 
+    0 8px 8px rgba(237, 97, 4, 0.12),
+    inset 0 0 10px #00000021; /* Sombra interna */
     width: 100%;
-    margin: 30px 10px 10px 30px;
+    margin: 50% 0;
     padding: 10px;
+    
 }
 
 #totalHoras{
@@ -68,7 +76,7 @@ fieldset{
 }
 
 legend{
-    color: #F0920C;
+    color: #FE7F2D;
     font-size: 1.5em;
 }
 
@@ -88,6 +96,29 @@ input{
     border-bottom: var(--border-bottom)
 }
 
+/* 1. Contenedor principal */
+.input-con-simbolo {
+  position: relative; /* Clave para posicionar el símbolo '$' adentro */
+  display: inline-block; /* O ajusta a tu layout */
+}
+
+/* 2. El pseudo-elemento que crea el símbolo '$' */
+.input-con-simbolo::before {
+  content: '$'; /* El símbolo que quieres mostrar */
+  position: absolute; /* Lo sacamos del flujo normal */
+  left: 10px; /* Distancia desde la izquierda */
+  top: 69%; /* Lo centramos verticalmente */
+  transform: translateY(-50%);
+  color: #FE7F2D; /* Color del símbolo */
+  pointer-events: none; /* Permite hacer clic a través del símbolo */
+  font-size: 16px ;
+}
+
+/* 3. Ajustamos el input para que el texto no se superponga con el '$' */
+.input-con-simbolo .inputPpales {
+  padding-left: 25px; /* Dejamos espacio a la izquierda para el símbolo */
+}
+
 .inputPpales{
     width: 100%;
     padding: 5px;
@@ -95,6 +126,24 @@ input{
     border: none;
 }
 
+.galeno_viaticos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+p{
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.layers{
+    margin-bottom: 0;
+    text-align: center;
+    color: #fff;
+}
 /* =======================
       BOTONES
 ========================== */
@@ -111,7 +160,7 @@ input{
 }
 
 .delete-btn{
-    background-color: red;
+    background-color: #9A0002;
     color: #fff;
     border: none;
     padding: 5px 7px;
