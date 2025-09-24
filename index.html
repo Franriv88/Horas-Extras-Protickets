@@ -29,10 +29,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="date" name="fecha[]"></td>
-                    <td><input type="time" name="horaInicio[]"></td>
-                    <td><input type="time" name="horaFin[]"></td>
-                    <td><p><span id="sumaParcial" name="cantHoras[]">0</span></p></td>
+                    <td><input type="date" name="fecha[]" onchange="calcularHoras(this)"></td>
+                    <td><input type="time" name="horaInicio[]" onchange="calcularHoras(this)"></td>
+                    <td><input type="time" name="horaFin[]" onchange="calcularHoras(this)"></td>
+                    <td><p><span id="sumaParcial" name="cantHoras[]" onchange="">0</span></p></td>
                     <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>
                 </tr>
             </tbody>

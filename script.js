@@ -1,13 +1,17 @@
 
 
 
-//sumatoria del día -> supa Parcial
+//================================
+//      LÓGICA DE SUMA PARCIAL EN CADA CELDA
+//================================
 
 
 
-//--------------------------------
-//      Lógica de Botones
-//--------------------------------
+
+
+//================================
+//      LÓGICA DE BOTONES
+//================================
 function agregarFila() {
     var tbody = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
     var nuevaFila = tbody.insertRow();
@@ -26,6 +30,6 @@ function agregarFila() {
 }
 
 function eliminarFila(boton) {
-    var fila = boton.parentNode;
+    var fila = boton.parentNode.parentNode;
     fila.parentNode.removeChild(fila);
 }
