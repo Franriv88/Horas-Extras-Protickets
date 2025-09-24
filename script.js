@@ -18,10 +18,10 @@ function agregarFila() {
     var celda4 = nuevaFila.insertCell();
     var celda5 = nuevaFila.insertCell(); //celda con el botón de eliminar
 
-    celda1.innerHTML = '<input type="date" name="dato1[]">';
-    celda2.innerHTML = '<input type="time" name="dato2[]">';
-    celda3.innerHTML = '<input type="time" name="dato3[]">';
-    celda4.innerHTML = '<p name="dato4[]">';
+    celda1.innerHTML = '<input type="date" name="fecha[]">';
+    celda2.innerHTML = '<input type="time" name="horaInicio[]">';
+    celda3.innerHTML = '<input type="time" name="horaFin[]">';
+    celda4.innerHTML = '<p name="cantHoras[]">';
     celda5.innerHTML = '<button class="delete-btn" onclick="eliminarFila(this)">X</button>';
 }
 
