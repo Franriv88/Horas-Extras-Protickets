@@ -14,7 +14,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 13px;
     line-height: 1.6;
-    background-color: #f0f2f5; /* Un fondo ligeramente gris para distinguir el contenedor */
-    background: #fff no-repeat center center fixed;
+    background-color: #4981d6; /* Un fondo ligeramente gris para distinguir el contenedor */
+    background: #88c5d8 no-repeat center center fixed;
     padding: 2rem;
 }
