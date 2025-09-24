@@ -13,12 +13,12 @@
         <legend>Horas Extras</legend>
         <div class="resumen">
             <div class="mes">
-            <input type="month" name="" id="">
+            <input type="month" class="inputPpales" name="" id="">
         </div>
         <div class="totales">
             <p><span id="totalHoras">---</span></p>
-            <input type="number" id="">
-            <input type="number" id="">
+            <input type="number" class="inputPpales">
+            <input type="number" class="inputPpales">
         </div>
         </div>
         <button class="addButton" type="button" onclick="agregarFila()">Agregar fila</button>
@@ -29,7 +29,7 @@
                     <th>Fecha</th>
                     <th>Hora inicio</th>
                     <th>Hora fin</th>
-                    <th>Cant Horas</th>
+                    <th id="sum">&#8721</th> <!-- para que aparezca el símbolo de sumatoria es co nese código -->
                 </tr>
             </thead>
             <tbody>
