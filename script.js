@@ -99,8 +99,6 @@ function agregarFila() {
 }
 
 function eliminarFila(boton) {
-    const fila = boton.closest('tr');
+    var fila = boton.parentNode.parentNode;
     fila.parentNode.removeChild(fila);
-
-    calcularTotalHoras(); // <--- AÑADE ESTA LÍNEA
 }

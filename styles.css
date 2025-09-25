@@ -22,7 +22,7 @@ body {
 
 .container{
     margin: auto;
-    width: 25%;
+    width: 30%;
     align-content: center; /*no está funcionando esto*/
     margin: auto;
 }
@@ -61,7 +61,7 @@ fieldset{
 
 #totalHoras{
     font-weight: bold;
-    font-size: 1.2em;  
+    font-size: 1.5rem;  
 }
 
 #sum{
@@ -124,6 +124,7 @@ input{
     padding: 5px;
     margin: 5px 0;
     border: none;
+    font-size: 20px;;
 }
 
 .galeno_viaticos{
@@ -156,7 +157,7 @@ p{
     border-radius: 5px;
     margin-bottom: 2px;
     margin-top: 20px;
-    width: 150px;
+    width: 100px;
 }
 
 .delete-btn{
