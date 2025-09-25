@@ -54,7 +54,7 @@ fieldset{
     0 8px 8px rgba(237, 97, 4, 0.12),
     inset 0 0 10px #00000021; /* Sombra interna */
     width: 100%;
-    margin: 50% 0;
+    margin: 30% 0;
     padding: 10px;
     
 }
@@ -72,7 +72,7 @@ fieldset{
     font-weight: bold;
     color: #fff;
     margin-left:20px;
-    border-bottom:var(--border-bottom)
+    border-bottom:var(--border-bottom);
 }
 
 legend{
@@ -138,6 +138,7 @@ p{
     color: var(--primary-color);
     font-weight: bold;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .layers{
