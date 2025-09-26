@@ -16,7 +16,7 @@ body {
     font-size: 13px;
     line-height: 1.6;
     background-color: #586063; /* Color de respaldo si la imagen no carga */
-    background: url(https://i.pinimg.com/736x/67/28/67/6728670022309504b7cec7f926a08d05.jpg) no-repeat center center fixed;
+    /* background: url(https://cdn.getcrowder.com/images/f7957c7d-15d8-4d69-881a-f433c29be69b-d1.png) no-repeat center center fixed; */
     background-size: cover;
 }
 

@@ -14,18 +14,18 @@
         <legend>Horas Extras</legend>
         <div class="resumen">
             <div class="mes">
-            <input type="month" class="inputPpales" name="" id="">
-        </div>
-        <div class="totales">
-            <p><span id="totalHoras">---</span></p>
+                <input type="month" class="inputPpales" name="" id="mesSeleccionado" onchange="guardarDatos()">
+            </div>
+            <div class="totales">
+                <p><span id="totalHoras">---</span></p>
             <div class="galeno_viaticos">
                 <div class="input-con-simbolo">
                     <p class="layers">Galeno</p>
-                    <input type="number" class="inputPpales">
+                    <input type="number" class="inputPpales" id="galeno" placeholder="Galeno " onchange="guardarDatos()">
                 </div>
                 <div class="input-con-simbolo">
                     <p class="layers">Viáticos</p>
-                    <input type="number" class="inputPpales">
+                    <input type="number" class="inputPpales" id="viaticos" placeholder="Viáticos" onchange="guardarDatos()">
                 </div>
             </div>
         </div>
