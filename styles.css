@@ -22,7 +22,7 @@ body {
 
 .container{
     margin: auto;
-    width: 30%;
+    width: 50%;
     align-content: center; /*no está funcionando esto*/
     margin: auto;
 }
@@ -58,6 +58,14 @@ fieldset{
     padding: 10px;
     
 }
+
+.dia-semana {
+    font-weight: bold;
+    color: #fff;
+    display: block; /* Para que ocupe todo el espacio de la celda */
+    text-align: center;
+}
+
 
 #totalHoras{
     font-weight: bold;

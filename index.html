@@ -33,24 +33,26 @@
         <button class="addButton" type="button" onclick="agregarFila()">Agregar fila</button>
         <div class="datos">
             <table id="miTabla" class="talbe-wrapper">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Hora inicio</th>
-                    <th>Hora fin</th>
-                    <th id="sum">&#8721</th> <!-- para que aparezca el símbolo de sumatoria es co nese código -->
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="date" name="fecha[]" onchange="calcularHoras(this)"></td>
-                    <td><input type="time" name="horaInicio[]" onchange="calcularHoras(this)"></td>
-                    <td><input type="time" name="horaFin[]" onchange="calcularHoras(this)"></td>
-                    <td><p><span class="sumaParcial" name="cantHoras[]" onchange="">0</span></p></td>
-                    <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>
-                </tr>
-            </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th>Día</th> 
+            <th>Fecha</th>
+            <th>Hora inicio</th>
+            <th>Hora fin</th>
+            <th id="sum">&#8721;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><span class="dia-semana">---</span></td> 
+            <td><input type="date" name="fecha[]" onchange="calcularHorasYDia(this)"></td>
+            <td><input type="time" name="horaInicio[]" onchange="calcularHorasYDia(this)"></td>
+            <td><input type="time" name="horaFin[]" onchange="calcularHorasYDia(this)"></td>
+            <td><p><span class="sumaParcial" name="cantHoras[]">0</span></p></td>
+            <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>
+        </tr>
+    </tbody>
+</table>
         </div>
         </fieldset>
     </div>

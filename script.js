@@ -1,10 +1,15 @@
 //================================
-// LÓGICA DE GUARDADO Y CARGA DE DATOS (LocalStorage)
+// LÓGICA PRINCIPAL AL CARGAR LA PÁGINA
 //================================
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarDatos();
 });
+
+
+//================================
+// LÓGICA DE GUARDADO Y CARGA (LocalStorage)
+//================================
 
 function guardarDatos() {
     // Guarda los datos de la tabla
@@ -61,38 +66,55 @@ function cargarDatos() {
 }
 
 //================================
-// LÓGICA DE CÁLCULO DE HORAS
+// LÓGICA DE CÁLCULO DE HORAS Y DÍA (FUNCIÓN RESTAURADA)
 //================================
 
-function calcularHoras(inputElemento) {
+function calcularHorasYDia(inputElemento) {
     const fila = inputElemento.closest('tr');
+    
+    // --- LÓGICA PARA CALCULAR EL DÍA ---
     const fechaInput = fila.querySelector('input[name="fecha[]"]');
+    const diaSemanaSpan = fila.querySelector('.dia-semana');
+    
+    if (fechaInput.value) {
+        const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const fechaSeleccionada = new Date(fechaInput.value + 'T00:00');
+        const numeroDia = fechaSeleccionada.getDay();
+        diaSemanaSpan.textContent = dias[numeroDia];
+    } else {
+        diaSemanaSpan.textContent = "---";
+    }
+
+    // --- LÓGICA PARA CALCULAR HORAS ---
     const inicioInput = fila.querySelector('input[name="horaInicio[]"]');
     const finInput = fila.querySelector('input[name="horaFin[]"]');
     const resultadoSpan = fila.querySelector('.sumaParcial');
 
     if (!fechaInput.value || !inicioInput.value || !finInput.value) {
         resultadoSpan.textContent = "0";
-        calcularTotalHoras();
-        guardarDatos();
-        return;
+    } else {
+        const fechaInicio = new Date(`${fechaInput.value}T${inicioInput.value}`);
+        const fechaFin = new Date(`${fechaInput.value}T${finInput.value}`);
+        let diferenciaMs = fechaFin - fechaInicio;
+
+        if (diferenciaMs < 0) {
+            diferenciaMs += 24 * 60 * 60 * 1000;
+        }
+
+        const horas = Math.floor(diferenciaMs / (1000 * 60 * 60));
+        const minutos = Math.round((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
+        resultadoSpan.textContent = `${horas}h ${minutos}m`;
     }
-
-    const fechaInicio = new Date(`${fechaInput.value}T${inicioInput.value}`);
-    const fechaFin = new Date(`${fechaInput.value}T${finInput.value}`);
-    let diferenciaMs = fechaFin - fechaInicio;
-
-    if (diferenciaMs < 0) {
-        diferenciaMs += 24 * 60 * 60 * 1000;
-    }
-
-    const horas = Math.floor(diferenciaMs / (1000 * 60 * 60));
-    const minutos = Math.round((diferenciaMs % (1000 * 60 * 60)) / (1000 * 60));
-    resultadoSpan.textContent = `${horas}h ${minutos}m`;
-
+    
+    // Al final, actualizamos todo
     calcularTotalHoras();
     guardarDatos();
 }
+
+
+//================================
+// LÓGICA DE SUMA TOTAL DE HORAS
+//================================
 
 function calcularTotalHoras() {
     const totalHorasSpan = document.getElementById('totalHoras');
@@ -112,8 +134,10 @@ function calcularTotalHoras() {
     const minutosRestantes = totalMinutos % 60;
     totalHorasSpan.textContent = `Total del Mes: ${totalHoras}h ${minutosRestantes}m`;
 
+    // ¡Esta es la llamada clave que activa el cambio de fondo!
     actualizarFondoPorHorasExtras();
 }
+
 
 //================================
 // LÓGICA DE BOTONES
@@ -122,28 +146,36 @@ function calcularTotalHoras() {
 function agregarFila(datos = null) {
     const tbody = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
     const nuevaFila = tbody.insertRow();
+    
     const fecha = datos ? datos.fecha : '';
     const horaInicio = datos ? datos.horaInicio : '';
     const horaFin = datos ? datos.horaFin : '';
+
     nuevaFila.innerHTML = `
-        <td><input type="date" name="fecha[]" value="${fecha}" onchange="calcularHoras(this)"></td>
-        <td><input type="time" name="horaInicio[]" value="${horaInicio}" onchange="calcularHoras(this)"></td>
-        <td><input type="time" name="horaFin[]" value="${horaFin}" onchange="calcularHoras(this)"></td>
+        <td><span class="dia-semana">---</span></td>
+        <td><input type="date" name="fecha[]" value="${fecha}" onchange="calcularHorasYDia(this)"></td>
+        <td><input type="time" name="horaInicio[]" value="${horaInicio}" onchange="calcularHorasYDia(this)"></td>
+        <td><input type="time" name="horaFin[]" value="${horaFin}" onchange="calcularHorasYDia(this)"></td>
         <td><p><span class="sumaParcial">0</span></p></td>
         <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>
     `;
-    if (datos) {
+    
+    if (datos && datos.fecha) {
         const inputFecha = nuevaFila.querySelector('input[type="date"]');
-        calcularHoras(inputFecha);
+        calcularHorasYDia(inputFecha);
     }
 }
 
+// FUNCIÓN eliminarFila RESTAURADA
 function eliminarFila(boton) {
     const fila = boton.closest('tr');
     fila.parentNode.removeChild(fila);
+    
+    // Llamadas necesarias para actualizar todo
     calcularTotalHoras();
     guardarDatos();
 }
+
 
 //================================
 // CAMBIO DE FONDO SEGÚN HORAS EXTRAS
@@ -151,30 +183,26 @@ function eliminarFila(boton) {
 
 function actualizarFondoPorHorasExtras() {
     const totalHorasSpan = document.getElementById('totalHoras');
-    const textoTotal = totalHorasSpan.textContent; // ej: "Total del Mes: 45h 30m"
+    const textoTotal = totalHorasSpan.textContent; 
     let imagenDeFondoUrl;
 
-    // Extraemos el número de horas del texto
     const horasMatch = textoTotal.match(/(\d+)h/);
     const horasTotales = horasMatch ? parseInt(horasMatch[1], 10) : 0;
     
-    // Definí tus umbrales de horas e imágenes
     if (horasTotales < 10) {
-        // Menos de 10 horas
-        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/f7957c7d-15d8-4d69-881a-f433c29be69b-d1.png")'; // Fondo tranquilo
+        // Fondo tranquilo
+        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/f7957c7d-15d8-4d69-881a-f433c29be69b-d1.png")'; 
     } else if (horasTotales >= 10 && horasTotales < 30) {
-        // Entre 10 y 29 horas
-        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/878b519c-3256-4757-83b4-3b1ac2a14a90-d2.png")'; // Fondo moderado
+        // Fondo moderado
+        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/878b519c-3256-4757-83b4-3b1ac2a14a90-d2.png")'; 
     } else {
-        // 30 horas o más
-        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/1a1e09de-7fde-40ff-9829-9e4c6b690463-d3.png")'; // Fondo intenso/playa
+        // Fondo intenso/playa
+        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/1a1e09de-7fde-40ff-9829-9e4c6b690463-d3.png")'; 
     }
 
-    // Aplica la imagen de fondo al body
     document.body.style.backgroundImage = imagenDeFondoUrl;
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundPosition = 'center';
     document.body.style.backgroundRepeat = 'no-repeat';
     document.body.style.backgroundAttachment = 'fixed';
 }
- 
