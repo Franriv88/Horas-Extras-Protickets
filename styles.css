@@ -154,6 +154,8 @@ p{
     text-align: center;
     color: #fff;
 }
+
+
 /* =======================
       BOTONES
 ========================== */
@@ -176,4 +178,42 @@ p{
     padding: 5px 7px;
     cursor: pointer;
     border-radius: 50%;
+}
+
+/* --- Estilos para el nuevo botón --- */
+
+/* Botón en estado desactivado (default) */
+.btn-activar {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #6c757d;
+    background-color: #c9c9c9;
+    cursor: pointer;
+    margin: auto;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- Estilos para la fila ACTIVA --- */
+
+/* Cuando la fila <tr> tiene la clase .fila-activa, estos estilos se aplican */
+
+/* Cambia el color del botón de activación */
+.fila-activa .btn-activar {
+    background-color: #28a745; /* Verde para estado activo */
+    border-color: #28a745;
+}
+
+/* Pinta el fondo de los inputs y spans en la fila activa */
+.fila-activa input,
+.fila-activa .dia-semana,
+.fila-activa .sumaParcial {
+    background-color: rgba(40, 167, 69, 0.2); /* Un verde semitransparente */
+    border-radius: 5px; /* Opcional: para que se vea más prolijo */
+}
+
+/* Hacemos el color de fondo de los inputs opaco para que se vea bien */
+.fila-activa input{
+    background-color: #203525;
 }

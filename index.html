@@ -35,7 +35,8 @@
             <table id="miTabla" class="talbe-wrapper">
     <thead>
         <tr>
-            <th>Día</th> 
+            <th id="feriado">¿Feriado?</th> 
+            <th>Día</th>
             <th>Fecha</th>
             <th>Hora inicio</th>
             <th>Hora fin</th>
@@ -44,7 +45,10 @@
     </thead>
     <tbody>
         <tr>
-            <td><span class="dia-semana">---</span></td> 
+            <td>
+                <button class="btn-activar" onclick="toggleActivarFila(this)">Feriado</button>
+            </td>
+            <td><span class="dia-semana">---</span></td>
             <td><input type="date" name="fecha[]" onchange="calcularHorasYDia(this)"></td>
             <td><input type="time" name="horaInicio[]" onchange="calcularHorasYDia(this)"></td>
             <td><input type="time" name="horaFin[]" onchange="calcularHorasYDia(this)"></td>

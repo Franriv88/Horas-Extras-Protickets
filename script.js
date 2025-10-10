@@ -4,6 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarDatos();
+    actualizarFondoPorHora();
 });
 
 
@@ -12,20 +13,22 @@ document.addEventListener('DOMContentLoaded', () => {
 //================================
 
 function guardarDatos() {
-    // Guarda los datos de la tabla
     const filas = document.querySelectorAll('#miTabla tbody tr');
     const datosDeTabla = [];
+
     filas.forEach(fila => {
         const fecha = fila.querySelector('input[name="fecha[]"]').value;
         const horaInicio = fila.querySelector('input[name="horaInicio[]"]').value;
         const horaFin = fila.querySelector('input[name="horaFin[]"]').value;
+        // NUEVO: Guardamos si la fila está activa o no
+        const activa = fila.classList.contains('fila-activa');
+
         if (fecha) {
-            datosDeTabla.push({ fecha, horaInicio, horaFin });
+            datosDeTabla.push({ fecha, horaInicio, horaFin, activa });
         }
     });
     localStorage.setItem('misHorasExtras', JSON.stringify(datosDeTabla));
 
-    // Guarda los inputs principales
     const mesSeleccionado = document.getElementById('mesSeleccionado').value;
     const galenoValor = document.getElementById('galeno').value;
     const viaticosValor = document.getElementById('viaticos').value;
@@ -36,7 +39,6 @@ function guardarDatos() {
 }
 
 function cargarDatos() {
-    // Carga los inputs principales
     const mesGuardado = localStorage.getItem('mesSeleccionado');
     if (mesGuardado) {
         document.getElementById('mesSeleccionado').value = mesGuardado;
@@ -52,7 +54,6 @@ function cargarDatos() {
         document.getElementById('viaticos').value = viaticosGuardado;
     }
     
-    // Carga los datos de la tabla
     const datosGuardados = localStorage.getItem('misHorasExtras');
     if (datosGuardados) {
         const datosDeTabla = JSON.parse(datosGuardados);
@@ -65,14 +66,13 @@ function cargarDatos() {
     }
 }
 
+
 //================================
-// LÓGICA DE CÁLCULO DE HORAS Y DÍA (FUNCIÓN RESTAURADA)
+// LÓGICA DE CÁLCULOS
 //================================
 
 function calcularHorasYDia(inputElemento) {
     const fila = inputElemento.closest('tr');
-    
-    // --- LÓGICA PARA CALCULAR EL DÍA ---
     const fechaInput = fila.querySelector('input[name="fecha[]"]');
     const diaSemanaSpan = fila.querySelector('.dia-semana');
     
@@ -85,7 +85,6 @@ function calcularHorasYDia(inputElemento) {
         diaSemanaSpan.textContent = "---";
     }
 
-    // --- LÓGICA PARA CALCULAR HORAS ---
     const inicioInput = fila.querySelector('input[name="horaInicio[]"]');
     const finInput = fila.querySelector('input[name="horaFin[]"]');
     const resultadoSpan = fila.querySelector('.sumaParcial');
@@ -106,15 +105,9 @@ function calcularHorasYDia(inputElemento) {
         resultadoSpan.textContent = `${horas}h ${minutos}m`;
     }
     
-    // Al final, actualizamos todo
     calcularTotalHoras();
     guardarDatos();
 }
-
-
-//================================
-// LÓGICA DE SUMA TOTAL DE HORAS
-//================================
 
 function calcularTotalHoras() {
     const totalHorasSpan = document.getElementById('totalHoras');
@@ -134,7 +127,6 @@ function calcularTotalHoras() {
     const minutosRestantes = totalMinutos % 60;
     totalHorasSpan.textContent = `Total del Mes: ${totalHoras}h ${minutosRestantes}m`;
 
-    // ¡Esta es la llamada clave que activa el cambio de fondo!
     actualizarFondoPorHorasExtras();
 }
 
@@ -142,6 +134,13 @@ function calcularTotalHoras() {
 //================================
 // LÓGICA DE BOTONES
 //================================
+
+// NUEVA FUNCIÓN para activar/desactivar la fila
+function toggleActivarFila(boton) {
+    const fila = boton.closest('tr');
+    fila.classList.toggle('fila-activa');
+    guardarDatos(); // Guardamos el nuevo estado
+}
 
 function agregarFila(datos = null) {
     const tbody = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
@@ -151,7 +150,9 @@ function agregarFila(datos = null) {
     const horaInicio = datos ? datos.horaInicio : '';
     const horaFin = datos ? datos.horaFin : '';
 
+    // NUEVO: Se agrega la celda del botón de activar
     nuevaFila.innerHTML = `
+        <td><button class="btn-activar" onclick="toggleActivarFila(this)"></button></td>
         <td><span class="dia-semana">---</span></td>
         <td><input type="date" name="fecha[]" value="${fecha}" onchange="calcularHorasYDia(this)"></td>
         <td><input type="time" name="horaInicio[]" value="${horaInicio}" onchange="calcularHorasYDia(this)"></td>
@@ -160,26 +161,45 @@ function agregarFila(datos = null) {
         <td><button class="delete-btn" onclick="eliminarFila(this)">X</button></td>
     `;
     
+    // NUEVO: Si los datos guardados indican que la fila estaba activa, le aplicamos la clase
+    if (datos && datos.activa) {
+        nuevaFila.classList.add('fila-activa');
+    }
+
     if (datos && datos.fecha) {
         const inputFecha = nuevaFila.querySelector('input[type="date"]');
         calcularHorasYDia(inputFecha);
     }
 }
 
-// FUNCIÓN eliminarFila RESTAURADA
 function eliminarFila(boton) {
     const fila = boton.closest('tr');
     fila.parentNode.removeChild(fila);
     
-    // Llamadas necesarias para actualizar todo
     calcularTotalHoras();
     guardarDatos();
 }
 
 
 //================================
-// CAMBIO DE FONDO SEGÚN HORAS EXTRAS
+// LÓGICA DE FONDOS DINÁMICOS
 //================================
+function actualizarFondoPorHora() {
+    const horaActual = new Date().getHours();
+    let imagenDeFondoUrl;
+
+    if (horaActual >= 6 && horaActual < 12) {
+        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/f7957c7d-15d8-4d69-881a-f433c29be69b-d1.png")'; 
+    } else if (horaActual >= 12 && horaActual < 19) {
+        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/878b519c-3256-4757-83b4-3b1ac2a14a90-d2.png")'; 
+    } else {
+        imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/1a1e09de-7fde-40ff-9829-9e4c6b690463-d3.png")'; 
+    }
+
+    document.body.style.backgroundImage = imagenDeFondoUrl;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+}
 
 function actualizarFondoPorHorasExtras() {
     const totalHorasSpan = document.getElementById('totalHoras');
@@ -190,19 +210,14 @@ function actualizarFondoPorHorasExtras() {
     const horasTotales = horasMatch ? parseInt(horasMatch[1], 10) : 0;
     
     if (horasTotales < 10) {
-        // Fondo tranquilo
         imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/f7957c7d-15d8-4d69-881a-f433c29be69b-d1.png")'; 
     } else if (horasTotales >= 10 && horasTotales < 30) {
-        // Fondo moderado
         imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/878b519c-3256-4757-83b4-3b1ac2a14a90-d2.png")'; 
     } else {
-        // Fondo intenso/playa
         imagenDeFondoUrl = 'url("https://cdn.getcrowder.com/images/1a1e09de-7fde-40ff-9829-9e4c6b690463-d3.png")'; 
     }
 
     document.body.style.backgroundImage = imagenDeFondoUrl;
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundAttachment = 'fixed';
 }
