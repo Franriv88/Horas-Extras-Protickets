@@ -22,7 +22,7 @@ body {
 
 .container{
     margin: auto;
-    width: 800px;
+    width: 50%;
     align-content: center; /*no está funcionando esto*/
     margin: auto;
 }
