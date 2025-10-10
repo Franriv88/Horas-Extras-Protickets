@@ -1,2 +1,2 @@
 # Horas Extras Protickets
-Ingresa fecha y hora y calucla la cantidad de horas extras trabajadas
+Ingresa fecha, hora de inicio y hora de fin, y calucla la cantidad de horas extras trabajadas por día y durante todo el mes.
