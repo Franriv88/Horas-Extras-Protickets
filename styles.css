@@ -22,7 +22,8 @@ body {
 
 .container{
     margin: auto;
-    width: 50%;
+    width: 40rem;
+    height: 100vh;
     align-content: center; /*no está funcionando esto*/
     margin: auto;
 }
